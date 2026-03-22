@@ -6,7 +6,7 @@ export default function Home() {
 
         {/* Intro Tag */}
         <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-orange-500 bg-orange-950/30 text-orange-500 text-sm font-semibold tracking-wide">
-          Welcome to the club
+          Welcome to the Geekroom
         </div>
 
         {/* Main Headline */}
