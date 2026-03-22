@@ -25,7 +25,6 @@ export default function RootLayout({ children }) {
               width={60}
               height={40}
             />
-            <span>GEEKROOM</span>
           </div>
 
           <div className="flex gap-6 font-medium text-sm text-gray-400">
