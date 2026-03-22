@@ -1,4 +1,6 @@
 import ParticlesBackground from "../components/ParticlesBackground";
+import Link from "next/link";
+
 export default function Home() {
   return (
     <ParticlesBackground>
@@ -21,9 +23,9 @@ export default function Home() {
 
         {/* Buttons (Where you might inject a UI Verse component later) */}
         <div className="flex gap-4">
-          <button className="px-8 py-3 rounded-md bg-teal-600 text-white font-bold hover:bg-orange-700 transition-colors">
+          <Link href="/join" className="px-8 py-3 rounded-md bg-teal-600 text-white font-bold hover:bg-orange-700 transition-colors">
             Join Us
-          </button>
+          </Link>
           <button className="px-8 py-3 rounded-md bg-transparent border border-white/20 text-white font-bold hover:bg-white/5 transition-colors">
             View Projects
           </button>
