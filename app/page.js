@@ -1,7 +1,7 @@
-import AuroraBackground from "../components/AuroraBackground";
+import ParticlesBackground from "../components/ParticlesBackground";
 export default function Home() {
   return (
-    <AuroraBackground>
+    <ParticlesBackground>
       <div className="flex flex-col items-center justify-center pt-32 px-6 text-center">
 
         {/* Intro Tag */}
@@ -34,6 +34,6 @@ export default function Home() {
         </div>
 
       </div>
-    </AuroraBackground>
+    </ParticlesBackground>
   );
 }
