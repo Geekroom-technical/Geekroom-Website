@@ -182,7 +182,7 @@ export default function JoinForm() {
         }
 
         .hero-letter {
-          display: inline-block;
+          display: inline;
           animation: letterReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
           transform-origin: bottom center;
         }
