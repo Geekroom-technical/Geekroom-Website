@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const PARTICLE_COUNT = 120;
+const PARTICLE_COUNT = 138;
 const MOUSE_RADIUS = 100;
 const REPULSE_STRENGTH = 5;
 const BASE_SPEED = 0.4;
@@ -30,7 +30,6 @@ class Particle {
   }
 
   update(canvasWidth, canvasHeight, mouseX, mouseY) {
-    // Mouse repulsion
     const dx = this.x - mouseX;
     const dy = this.y - mouseY;
     const dist = Math.sqrt(dx * dx + dy * dy);
@@ -40,12 +39,10 @@ class Particle {
       this.x += (dx / dist) * force * REPULSE_STRENGTH;
       this.y += (dy / dist) * force * REPULSE_STRENGTH;
     } else {
-      // Drift slowly back and keep drifting
       this.x += this.vx;
       this.y += this.vy;
     }
 
-    // Wrap around edges
     if (this.x < -10) this.x = canvasWidth + 10;
     if (this.x > canvasWidth + 10) this.x = -10;
     if (this.y < -10) this.y = canvasHeight + 10;
@@ -76,7 +73,6 @@ export default function ParticlesBackground({ children }) {
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      // Re-initialise particles on resize
       particlesRef.current = Array.from(
         { length: PARTICLE_COUNT },
         () => new Particle(canvas.width, canvas.height)
@@ -99,7 +95,6 @@ export default function ParticlesBackground({ children }) {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw connecting lines between nearby particles
       const particles = particlesRef.current;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -140,7 +135,6 @@ export default function ParticlesBackground({ children }) {
 
   return (
     <div className="relative flex flex-col items-center justify-center bg-[#050505] text-[#ededed] min-h-screen overflow-hidden">
-      {/* Animated Aurora Layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -inset-[10px] opacity-40 blur-[120px]">
           <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vh] bg-[#00A8B5] rounded-full mix-blend-screen animate-pulse duration-10000" />
@@ -149,14 +143,12 @@ export default function ParticlesBackground({ children }) {
         </div>
       </div>
 
-      {/* Particle Canvas Layer */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 1 }}
       />
 
-      {/* Content Layer */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center">
         {children}
       </div>

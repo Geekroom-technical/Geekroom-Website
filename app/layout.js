@@ -1,45 +1,56 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link"; // Next.js built-in tool for fast navigation
+import Image from "next/image";
+import Sidebar from "../components/Sidebar";
 import "./globals.css";
-import Image from "next/image"; // Add this to the very top of your file
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-export const metadata = {
-  title: "GeekRoom | Tech Community",
-  description: "Where coders connect, build, and grow.",
-};
-
 export default function RootLayout({ children }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.style.overscrollBehaviorX = "none";
+    document.body.style.overscrollBehaviorX = "none";
+  }, []);
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <head>
+        <title>GeekRoom | Tech Community</title>
+        <meta name="description" content="Where coders connect, build, and grow." />
+      </head>
       <body className="min-h-full flex flex-col bg-[#050505] text-[#ededed]">
-
-        {/* The Global Navigation Bar */}
-        <nav className="flex items-center justify-between p-6 border-b border-white/10 bg-[#0a0a0a]">
-          <div className="flex items-center gap-1 font-bold text-xl tracking-widest text-white">
+        <header className="fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-6 py-4 bg-transparent">
+          <div className="flex items-center">
             <Image
-              src="/Transparentlogo.webp" // The slash means it looks in your 'public' folder
+              src="/Transparentlogo.webp"
               alt="GeekRoom Logo"
-              width={60}
-              height={40}
+              width={80}
+              height={54}
+              priority
             />
           </div>
 
-          <div className="flex gap-6 font-medium text-sm text-gray-400">
-            {/* The Link component is how Next.js switches pages without reloading the browser */}
-            <Link href="/" className="hover:text-orange-500 transition-colors">Home</Link>
-            <Link href="/events" className="hover:text-orange-500 transition-colors">Events</Link>
-            <Link href="/about" className="hover:text-orange-500 transition-colors">About Us</Link>
-          </div>
-        </nav>
+          <button
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open menu"
+            className="flex flex-col justify-center items-center gap-[5px] p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 group"
+          >
+            <span className="block w-6 h-[2px] bg-current rounded-full transition-all duration-200 group-hover:w-7" />
+            <span className="block w-6 h-[2px] bg-current rounded-full transition-all duration-200" />
+            <span className="block w-4 h-[2px] bg-current rounded-full transition-all duration-200 group-hover:w-7" />
+          </button>
+        </header>
 
-        {/* The 'children' prop is whatever page currently being viewed (like page.js) */}
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
         <main className="flex-grow">
           {children}
         </main>
-
       </body>
     </html>
   );
