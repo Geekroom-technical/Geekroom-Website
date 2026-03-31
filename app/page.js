@@ -1,7 +1,8 @@
 import ParticlesBackground from "../components/ParticlesBackground";
 import AboutSection from "../components/AboutSection";
 import StatsSection from "../components/StatsSection";
-import Footer from "../components/Footer" // <-- Import the new component
+import Footer from "../components/Footer";
+import DecryptText from "../components/DecryptText";
 import Link from "next/link";
 import { Orbitron } from "next/font/google";
 
@@ -26,13 +27,22 @@ export default function Home() {
           </span>
         </h1>
 
-        <p className="relative text-gray-400 text-lg sm:text-xl max-w-md leading-relaxed mb-12">
-          A Room Full of Ideas.{" "}
-          <span className="text-[#00A8B5] font-medium drop-shadow-[0_0_8px_rgba(0,168,181,0.5)]">
-            A Club Full of Geeks.
+        <div className="relative text-gray-400 text-lg sm:text-xl max-w-md leading-relaxed mb-12 h-14 flex flex-col items-center justify-center">
+          <DecryptText
+            text="A Room Full of Ideas."
+            speed={40}
+            maxIterations={20}
+            animateOn="view"
+          />
+          <span className="text-[#00A8B5] font-medium drop-shadow-[0_0_8px_rgba(0,168,181,0.5)] mt-1">
+            <DecryptText
+              text="A Club Full of Geeks."
+              speed={40}
+              maxIterations={30} // Slightly higher iterations makes it decrypt slower/later
+              animateOn="view"
+            />
           </span>
-        </p>
-
+        </div>
         <div className="relative flex flex-wrap items-center justify-center gap-6">
           <Link
             href="/join"
@@ -52,8 +62,8 @@ export default function Home() {
       <AboutSection />
 
       {/* STATS SECTION */}
-      <StatsSection /> 
-      
+      <StatsSection />
+
       <Footer />
     </ParticlesBackground>
   );

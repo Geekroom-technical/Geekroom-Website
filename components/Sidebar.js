@@ -48,10 +48,10 @@ export default function Sidebar({ isOpen, onClose }) {
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
         style={{
-          background: "rgba(11, 25, 44, 0.45)", // Deepened the base color for better contrast
+          background: "rgba(11, 25, 44, 0.45)", 
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          borderLeft: "1px solid rgba(0, 168, 181, 0.2)", // Subtle Teal border
+          borderLeft: "1px solid rgba(0, 168, 181, 0.2)", 
           boxShadow: "-8px 0 40px rgba(0, 0, 0, 0.5), inset 1px 0 0 0 rgba(0,168,181,0.1)",
         }}
         aria-label="Navigation sidebar"
@@ -75,16 +75,29 @@ export default function Sidebar({ isOpen, onClose }) {
               href={href}
               onClick={onClose}
               className="group flex items-center gap-4 px-4 py-4 rounded-2xl
-                text-gray-300 text-lg font-bold tracking-wide
-                hover:text-white hover:translate-x-2
+                text-lg font-bold tracking-wide
+                hover:translate-x-2
                 hover:bg-gradient-to-r hover:from-[#00A8B5]/10 hover:to-transparent
                 transition-all duration-300 ease-out"
             >
+              {/* The glowing orange side-bar indicator */}
               <span
                 className="w-1 h-6 rounded-r-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-[0_0_10px_rgba(249,115,22,0.8)]"
                 style={{ background: "linear-gradient(to bottom, #f97316, #fb923c)" }}
               />
-              {label}
+              
+              {/* The Cross-Fading Text Container */}
+              <div className="relative">
+                {/* Default state: Gray text */}
+                <span className="text-gray-300 transition-opacity duration-300 group-hover:opacity-0">
+                  {label}
+                </span>
+                
+                {/* Hover state: Orange to Teal gradient with a slight glow */}
+                <span className="absolute left-0 top-0 text-transparent bg-clip-text bg-gradient-to-r from-[#f97316] to-[#00A8B5] opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_0_8px_rgba(0,168,181,0.4)]">
+                  {label}
+                </span>
+              </div>
             </Link>
           ))}
         </nav>
