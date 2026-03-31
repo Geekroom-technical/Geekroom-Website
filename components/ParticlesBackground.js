@@ -6,7 +6,8 @@ const PARTICLE_COUNT = 138;
 const MOUSE_RADIUS = 100;
 const REPULSE_STRENGTH = 5;
 const BASE_SPEED = 0.4;
-const PARTICLE_COLORS = ["#f97316", "#00A8B5", "#ef4444", "#ffffff"];
+// Strictly Orange, Teal, and White for the aesthetic
+const PARTICLE_COLORS = ["#f97316", "#fb923c", "#00A8B5", "#0D9488", "#ffffff"];
 
 function randomBetween(min, max) {
   return Math.random() * (max - min) + min;
@@ -101,10 +102,11 @@ export default function ParticlesBackground({ children }) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
+          // Changed constellation line color to a faint teal
           if (dist < 80) {
             ctx.save();
             ctx.globalAlpha = (1 - dist / 80) * 0.15;
-            ctx.strokeStyle = "#ffffff";
+            ctx.strokeStyle = "#00A8B5"; 
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -134,24 +136,24 @@ export default function ParticlesBackground({ children }) {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-center bg-[#050505] text-[#ededed] min-h-screen overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -inset-[10px] opacity-40 blur-[120px]">
+    <div className="relative bg-[#050505] text-[#ededed] min-h-screen">
+      
+      {/* The Fixed Canvas & Glow Layer */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -inset-[10px] opacity-30 blur-[120px]">
           <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vh] bg-[#00A8B5] rounded-full mix-blend-screen animate-pulse duration-10000" />
-          <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[60vh] bg-[#f97316] rounded-full mix-blend-screen animate-pulse duration-3000 delay-1000" />
-          <div className="absolute bottom-[-20%] left-[10%] w-[60vw] h-[50vh] bg-red-700 rounded-full mix-blend-screen animate-pulse duration-3000 delay-500" />
+          <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[60vh] bg-[#f97316] rounded-full mix-blend-screen animate-pulse duration-[8000ms] delay-1000" />
+          <div className="absolute bottom-[-20%] left-[20%] w-[50vw] h-[50vh] bg-[#0D9488] rounded-full mix-blend-screen animate-pulse duration-[12000ms] delay-500" />
         </div>
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0"
+        />
       </div>
 
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 1 }}
-      />
-
-      <div className="relative z-10 w-full flex flex-col items-center justify-center">
+      <div className="relative z-10 w-full flex flex-col">
         {children}
       </div>
+      
     </div>
-  );
-}
+  );}
