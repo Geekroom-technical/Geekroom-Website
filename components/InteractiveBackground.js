@@ -2,61 +2,56 @@
 import { useEffect, useRef } from "react";
 
 export default function InteractiveBackground({ children }) {
-  const bgRef1 = useRef(null);
-  const bgRef2 = useRef(null);
-  const bgRef3 = useRef(null);
+  const blob1 = useRef(null);
+  const blob2 = useRef(null);
 
   useEffect(() => {
-    let animationFrameId;
-
     const handleMouseMove = (e) => {
-      cancelAnimationFrame(animationFrameId);
-      animationFrameId = requestAnimationFrame(() => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 2;
-        const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      const { innerWidth: w, innerHeight: h } = window;
+      // Normalize mouse to -0.5 → 0.5
+      const x = e.clientX / w - 0.5;
+      const y = e.clientY / h - 0.5;
 
-        if (bgRef1.current) {
-          bgRef1.current.style.transform = `translate(${x * -70}px, ${y * -70}px)`;
-        }
-        if (bgRef2.current) {
-          bgRef2.current.style.transform = `translate(${x * -100}px, ${y * -100}px)`;
-        }
-        if (bgRef3.current) {
-          bgRef3.current.style.transform = `translate(${x * -50}px, ${y * -50}px)`;
-        }
-      });
+      // Drastically increased the movement strength so the effect is very noticeable
+      const strength = 180;
+
+      // Move in OPPOSITE direction → negative sign
+      if (blob1.current) {
+        blob1.current.style.transform = `translate(${-x * strength}px, ${-y * strength}px)`;
+      }
+      if (blob2.current) {
+        blob2.current.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      }
     };
-    
+
     window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-white">
-      {/* Interactive Blobs Container */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden h-full w-full z-0">
-        <div 
-          ref={bgRef1}
-          className="absolute w-[600px] h-[600px] sm:w-[900px] sm:h-[900px] rounded-full bg-cyan-200/40 blur-[120px] will-change-transform ease-out transition-transform duration-300"
-          style={{ bottom: "-20%", left: "-10%" }}
-        />
-        <div 
-          ref={bgRef2}
-          className="absolute w-[700px] h-[700px] sm:w-[1000px] sm:h-[1000px] rounded-full bg-orange-200/40 blur-[150px] will-change-transform ease-out transition-transform duration-300"
-          style={{ top: "0%", right: "-10%" }}
-        />
-        <div 
-          ref={bgRef3}
-          className="absolute w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] rounded-full bg-pink-100/50 blur-[100px] will-change-transform ease-out transition-transform duration-300"
-          style={{ top: "-10%", left: "20%" }}
-        />
-      </div>
-      
-      {/* Foreground Content */}
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center min-h-screen">
+    <div style={{ position: "relative", overflow: "hidden", minHeight: "100vh", background: "#ffffff" }}>
+      {/* Blob 1 - top left (Cyan / Teal) */}
+      <div ref={blob1} style={{
+        position: "absolute", top: "0%", left: "5%",
+        width: 900, height: 900, borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(6,182,212,0.65), transparent 70%)",
+        filter: "blur(60px)",
+        transition: "transform 0.1s ease-out",
+        pointerEvents: "none",
+      }} />
+
+      {/* Blob 2 - bottom right (Orange) */}
+      <div ref={blob2} style={{
+        position: "absolute", bottom: "0%", right: "5%",
+        width: 900, height: 900, borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(249,115,22,0.65), transparent 70%)",
+        filter: "blur(60px)",
+        transition: "transform 0.1s ease-out",
+        pointerEvents: "none",
+      }} />
+
+      {/* Page content sits on top */}
+      <div style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         {children}
       </div>
     </div>
