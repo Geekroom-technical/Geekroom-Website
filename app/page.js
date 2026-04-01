@@ -31,9 +31,12 @@ export default function Home() {
           >
             Join Us →
           </Link>
-          <button className="px-8 py-3 rounded-lg border border-white/15 text-gray-300 font-semibold text-sm tracking-wide hover:bg-white/5 hover:text-white active:scale-95 transition-all duration-200">
-            View Projects
-          </button>
+          <Link
+            href="/projects"
+            className="px-8 py-3 rounded-lg border border-white/15 text-gray-300 font-semibold text-sm tracking-wide hover:bg-white/5 hover:text-white active:scale-95 transition-all duration-200"
+          >
+            View Projects →
+          </Link>
         </div>
       </div>
     </ParticlesBackground>
