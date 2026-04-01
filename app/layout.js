@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
+import Navbar from "../components/Navbar";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -20,7 +21,10 @@ export default function RootLayout({ children }) {
         <meta name="description" content="Where coders connect, build, and grow." />
       </head>
       <body className="min-h-full flex flex-col bg-white text-black font-sans">
-        <main className="flex-grow flex flex-col">
+        {/* Navbar globally mounted here */}
+        <Navbar />
+        
+        <main className="flex-grow flex flex-col relative z-0">
           {children}
         </main>
       </body>
