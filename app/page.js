@@ -1,44 +1,45 @@
-import ParticlesBackground from "../components/ParticlesBackground";
-import Link from "next/link";
+import Image from "next/image";
+import InteractiveBackground from "../components/InteractiveBackground";
 
 export default function Home() {
   return (
-    <ParticlesBackground>
-      <div className="relative min-h-screen flex flex-col items-center justify-center px-6 text-center select-none">
-        <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center"
-          aria-hidden="true"
-        >
-          <div className="w-[600px] h-[600px] rounded-full bg-orange-600/10 blur-[140px]" />
+    <InteractiveBackground>
+      <div className="flex flex-col items-center justify-center px-4 text-center select-none w-full max-w-4xl mx-auto flex-grow py-20">
+
+        {/* Transparent Logo */}
+        <div className="w-48 sm:w-56 flex justify-center items-center drop-shadow-sm mb-4 animate-fadeIn animate-float" style={{ animationDelay: '0s' }}>
+          <Image
+            src="/Transparentlogo.webp"
+            alt="GeekRoom Logo"
+            width={300}
+            height={300}
+            className="w-full h-auto object-contain"
+            priority
+          />
         </div>
 
-        <h1 className="relative text-7xl sm:text-8xl md:text-9xl font-extrabold tracking-tighter leading-none text-white mb-6 drop-shadow-lg">
-          Geek
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">
-            Room
-          </span>
+        {/* Heading */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#1a1a1a] select-none uppercase mb-4">
+          GEEK ROOM
         </h1>
 
-        <p className="relative text-gray-400 text-lg sm:text-xl max-w-md leading-relaxed mb-10">
-          A Room Full of Ideas.{" "}
-          <span className="text-gray-300 font-medium">A Club Full of Geeks.</span>
-        </p>
-
-        <div className="relative flex flex-wrap items-center justify-center gap-4">
-          <Link
-            href="/join"
-            className="px-8 py-3 rounded-lg bg-orange-500 text-white font-semibold text-sm tracking-wide hover:bg-orange-600 active:scale-95 transition-all duration-200 shadow-lg shadow-orange-500/30"
-          >
-            Join Us →
-          </Link>
-          <Link
-            href="/projects"
-            className="px-8 py-3 rounded-lg border border-white/15 text-gray-300 font-semibold text-sm tracking-wide hover:bg-white/5 hover:text-white active:scale-95 transition-all duration-200"
-          >
-            View Projects →
-          </Link>
+        {/* Badge */}
+        <div className="px-5 py-1.5 rounded-full border-[1.5px] border-gray-600 mb-6 bg-white/50 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-gray-800 hover:bg-white hover:shadow-lg">
+          <span className="text-gray-800 font-medium text-sm sm:text-base tracking-wide">Campus Chapter</span>
         </div>
+
+        {/* SRM Ghaziabad Heading */}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black mb-6">
+          SRM Ghaziabad
+        </h2>
+
+        {/* Subtitle / Description */}
+        <p className="text-gray-800 text-base sm:text-lg md:text-xl font-normal tracking-tight leading-relaxed max-w-3xl">
+          Geek Room is more than just a tech club — it's a community. We aim to bring
+          together curious minds who are passionate about exploring, building, and pushing
+          the boundaries of technology.
+        </p>
       </div>
-    </ParticlesBackground>
+    </InteractiveBackground>
   );
 }
