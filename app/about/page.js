@@ -1,5 +1,5 @@
 // d:/Geekroom-Website/app/about/page.js
-import ParticlesBackground from "../../components/ParticlesBackground";
+import InteractiveBackground from "../../components/InteractiveBackground";
 
 const missionPoints = [
   {
@@ -52,77 +52,73 @@ const stats = [
 
 export default function AboutPage() {
   return (
-    <ParticlesBackground>
-      <div className="relative min-h-screen px-6 pt-28 pb-20 text-white">
-        <div
-          className="pointer-events-none absolute inset-0 flex items-start justify-center"
-          aria-hidden="true"
-        >
-          <div className="mt-4 h-[420px] w-[420px] rounded-full bg-orange-600/10 blur-[140px]" />
-        </div>
+    <InteractiveBackground>
+      <div className="flex flex-col items-center justify-center px-4 text-center select-none w-full max-w-4xl mx-auto flex-grow py-32">
+
 
         <div className="relative mx-auto max-w-6xl space-y-16">
           <section className="text-center">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter leading-none text-white drop-shadow-lg">
-              About{" "}           
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">
-                 GeekRoom
-              </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#1a1a1a] select-none uppercase mb-4">
+              About GeekRoom
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-gray-400 text-lg leading-relaxed">
+            <p className="text-gray-800 text-base sm:text-lg md:text-xl font-normal tracking-tight leading-relaxed max-w-3xl">
               Geek Room is a college tech club where students explore, collaborate, and create real software through
               workshops, hackathons, and community projects.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Our Mission</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black mb-6">
+              Our Mission
+            </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {missionPoints.map((point) => (
                 <article
                   key={point.title}
-                  className="rounded-2xl border border-white/10 bg-black/30 p-6 transition-all duration-200 hover:-translate-y-1 hover:border-orange-400/40"
+                  className="rounded-2xl border border-white/10 bg-black/30 p-6 transition-all duration-200 hover:-translate-y-1 hover:border-gray-800/40"
                 >
-                  <div className="mb-4 inline-flex rounded-xl border border-orange-400/20 bg-orange-500/10 p-3">
+                  <div className="mb-4 inline-flex rounded-xl border border-gray-600/20 bg-white/50 p-3">
                     {point.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-white">{point.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-400">{point.description}</p>
+                  <h3 className="text-lg font-semibold text-black">{point.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-800">{point.description}</p>
                 </article>
               ))}
             </div>
           </section>
 
           <section>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What We Do</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black mb-6">
+              What We Do
+            </h2>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {activityCards.map((card) => (
                 <article
                   key={card}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition-all duration-200 hover:border-orange-400/35 hover:bg-white/[0.07]"
+                  className="rounded-2xl border border-gray-600 p-6 transition-all duration-200 hover:border-gray-800 hover:shadow-lg"
                 >
-                  <p className="text-lg font-semibold text-white">{card}</p>
-                  <p className="mt-2 text-sm text-gray-400">Hands-on, community-first, and focused on practical outcomes.</p>
+                  <p className="text-gray-800 font-medium text-sm sm:text-base tracking-wide">{card}</p>
+                  <p className="mt-2 text-sm text-gray-800">Hands-on, community-first, and focused on practical outcomes.</p>
                 </article>
               ))}
             </div>
           </section>
 
-          <section className="rounded-2xl border border-white/10 bg-black/35 p-6 sm:p-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Stats</h2>
-            <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <section className="w-full p-8 rounded-3xl border-2 border-gray-200 bg-gradient-to-br from-white/80 to-gray-50 shadow-xl">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black mb-8 text-center">Stats</h2>
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
               {stats.map((item) => (
-                <div key={item.label} className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
-                  <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">
+                <div key={item.label} className="p-6 rounded-2xl border-2 border-gray-200 bg-gradient-to-br from-white/50 to-gray-50 hover:shadow-xl transition-all duration-300">
+                  <p className="text-4xl font-black text-gray-900 mb-2">
                     {item.value}
                   </p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.2em] text-gray-400">{item.label}</p>
+                  <p className="text-sm uppercase tracking-wider font-semibold text-gray-600">{item.label}</p>
                 </div>
               ))}
             </div>
           </section>
         </div>
       </div>
-    </ParticlesBackground>
+    </InteractiveBackground>
   );
 }
