@@ -64,9 +64,9 @@ export default function AboutPage() {
         <div className="relative mx-auto max-w-6xl space-y-16">
           <section className="text-center">
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter leading-none text-white drop-shadow-lg">
-              About 
+              About{" "}           
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">
-                 Geek Room
+                 GeekRoom
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-gray-400 text-lg leading-relaxed">
