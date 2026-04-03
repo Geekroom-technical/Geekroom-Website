@@ -1,123 +1,140 @@
-// d:/Geekroom-Website/app/about/page.js
+"use client";
+
+import { useState, useEffect } from "react";
 import InteractiveBackground from "../../components/InteractiveBackground";
-
-const missionPoints = [
-  {
-    title: "Learn Together",
-    description: "We grow faster through peer sessions, code reviews, and shared curiosity.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-orange-400" aria-hidden="true">
-        <path d="M4 6.5C4 5.67 4.67 5 5.5 5H11v14H5.5A1.5 1.5 0 0 1 4 17.5v-11Z" stroke="currentColor" strokeWidth="1.7" />
-        <path d="M20 6.5C20 5.67 19.33 5 18.5 5H13v14h5.5a1.5 1.5 0 0 0 1.5-1.5v-11Z" stroke="currentColor" strokeWidth="1.7" />
-      </svg>
-    ),
-  },
-  {
-    title: "Build Real Things",
-    description: "From prototypes to production-ready apps, we ship projects that actually matter.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-orange-400" aria-hidden="true">
-        <path d="M4 10.5 12 6l8 4.5v8L12 23l-8-4.5v-8Z" stroke="currentColor" strokeWidth="1.7" />
-        <path d="M12 6v17M4 10.5l8 4.5 8-4.5" stroke="currentColor" strokeWidth="1.7" />
-      </svg>
-    ),
-  },
-  {
-    title: "Grow as One",
-    description: "We celebrate wins together and support every member through every challenge.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-orange-400" aria-hidden="true">
-        <circle cx="8" cy="9" r="3" stroke="currentColor" strokeWidth="1.7" />
-        <circle cx="16" cy="9" r="3" stroke="currentColor" strokeWidth="1.7" />
-        <path d="M3.5 19c0-2.5 2-4.5 4.5-4.5S12.5 16.5 12.5 19" stroke="currentColor" strokeWidth="1.7" />
-        <path d="M11.5 19c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5" stroke="currentColor" strokeWidth="1.7" />
-      </svg>
-    ),
-  },
-];
-
-const activityCards = [
-  "Workshops",
-  "Hackathons",
-  "Open Source",
-  "Networking",
-];
-
-const stats = [
-  { label: "Members", value: "200+" },
-  { label: "Events", value: "30+" },
-  { label: "Projects", value: "50+" },
-  { label: "Years", value: "3+" },
-];
+import Image from "next/image";
 
 export default function AboutPage() {
+  const [aboutData, setAboutData] = useState(null);
+  const [teamData, setTeamData] = useState(null);
+
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    
+    // Fetch About
+    fetch(`${apiUrl}/api/about`)
+      .then((res) => res.json())
+      .then(setAboutData)
+      .catch((err) => console.error("Failed to fetch about:", err));
+
+    // Fetch Team
+    fetch(`${apiUrl}/api/team`)
+      .then((res) => res.json())
+      .then(setTeamData)
+      .catch((err) => console.error("Failed to fetch team:", err));
+  }, []);
+
   return (
     <InteractiveBackground>
-      <div className="flex flex-col items-center justify-center px-4 text-center select-none w-full max-w-4xl mx-auto flex-grow py-32">
+      <div className="flex flex-col items-center justify-center px-4 text-center select-none w-full max-w-6xl mx-auto flex-grow py-32 space-y-24">
 
+        {/* Hero Section */}
+        <section className="text-center animate-fadeIn space-y-6">
+          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-[#1a1a1a] select-none">
+            About {aboutData?.title || "GeekRoom"}
+          </h1>
+          <p className="text-gray-800 text-lg sm:text-2xl font-medium tracking-tight leading-relaxed max-w-4xl mx-auto opacity-90">
+            {aboutData?.description || "Geek Room is a college tech club where students explore, collaborate, and create real software."}
+          </p>
+        </section>
 
-        <div className="relative mx-auto max-w-6xl space-y-16">
-          <section className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#1a1a1a] select-none uppercase mb-4">
-              About GeekRoom
-            </h1>
-            <p className="text-gray-800 text-base sm:text-lg md:text-xl font-normal tracking-tight leading-relaxed max-w-3xl">
-              Geek Room is a college tech club where students explore, collaborate, and create real software through
-              workshops, hackathons, and community projects.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black mb-6">
+        {/* Mission Section */}
+        {aboutData?.missionPoints && (
+          <section className="w-full space-y-12">
+            <h2 className="text-4xl font-bold text-black tracking-widest border-b-4 border-black inline-block pb-2">
               Our Mission
             </h2>
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {missionPoints.map((point) => (
+            <div className="grid gap-8 md:grid-cols-3">
+              {aboutData.missionPoints.map((point, idx) => (
                 <article
-                  key={point.title}
-                  className="rounded-2xl border border-white/10 bg-black/30 p-6 transition-all duration-200 hover:-translate-y-1 hover:border-gray-800/40"
+                  key={idx}
+                  className="group relative rounded-3xl border-2 border-black/5 bg-white/40 p-8 transition-all hover:bg-white hover:shadow-2xl hover:-translate-y-2"
                 >
-                  <div className="mb-4 inline-flex rounded-xl border border-gray-600/20 bg-white/50 p-3">
-                    {point.icon}
+                  <div className="mb-6 inline-flex rounded-2xl bg-black p-4 text-white shadow-lg group-hover:rotate-6 transition-transform">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" dangerouslySetInnerHTML={{ __html: point.icon_svg }} />
                   </div>
-                  <h3 className="text-lg font-semibold text-black">{point.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-800">{point.description}</p>
+                  <h3 className="text-2xl font-bold text-black mb-4 tracking-tight">{point.title}</h3>
+                  <p className="text-gray-700 leading-relaxed font-semibold">{point.description}</p>
                 </article>
               ))}
             </div>
           </section>
+        )}
 
-          <section>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black mb-6">
-              What We Do
+        {/* Stats Section */}
+        {aboutData?.stats && (
+           <section className="w-full group p-12 rounded-[3rem] border-2 border-black/5 bg-white/20 backdrop-blur-3xl shadow-sm hover:shadow-2xl transition-all duration-700">
+             <div className="grid grid-cols-2 gap-12 md:grid-cols-4">
+               {aboutData.stats.map((item, idx) => (
+                 <div key={idx} className="flex flex-col items-center">
+                   <p className="text-5xl sm:text-6xl font-bold text-[#1a1a1a] mb-2 tracking-tighter">
+                     {item.value}
+                   </p>
+                   <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-500 opacity-60">
+                     {item.label}
+                   </p>
+                 </div>
+               ))}
+             </div>
+           </section>
+        )}
+
+        {/* Team Section */}
+        {teamData?.teams && (
+          <section className="w-full space-y-20 pb-20">
+            <h2 className="text-4xl font-bold text-black tracking-widest border-b-4 border-black inline-block pb-2">
+              Meet The Core
             </h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {activityCards.map((card) => (
-                <article
-                  key={card}
-                  className="rounded-2xl border border-gray-600 p-6 transition-all duration-200 hover:border-gray-800 hover:shadow-lg"
-                >
-                  <p className="text-gray-800 font-medium text-sm sm:text-base tracking-wide">{card}</p>
-                  <p className="mt-2 text-sm text-gray-800">Hands-on, community-first, and focused on practical outcomes.</p>
-                </article>
-              ))}
-            </div>
-          </section>
+            
+            <div className="space-y-32">
+              {teamData.teams.map((team, tIdx) => (
+                <div key={tIdx} className="space-y-12">
+                  <div className="bg-black text-white px-8 py-3 rounded-full inline-block text-xs font-bold tracking-[0.3em]">
+                    {team.name}
+                  </div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 text-left">
+                    {/* Lead Card */}
+                    <div className="relative group bg-white border-2 border-black rounded-[2.5rem] p-10 shadow-2xl transition-all hover:scale-[1.02]">
+                       <div className="absolute top-6 right-6">
+                            <span className="bg-black text-white px-3 py-1 rounded-lg text-[10px] font-bold tracking-widest">LEAD</span>
+                       </div>
+                       <h4 className="text-4xl font-bold text-black mb-1 tracking-tighter">{team.lead.name}</h4>
+                       <p className="text-sm font-bold text-gray-400 tracking-widest mb-6">{team.lead.role}</p>
+                       <p className="text-gray-700 font-medium leading-snug">Pushing boundaries in {team.name} with passion and precision.</p>
+                       <div className="mt-8 border-t border-gray-100 pt-6 flex gap-4">
+                         {team.lead.linkedin && (
+                           <a href={team.lead.linkedin} target="_blank" className="text-black hover:scale-110 transition-transform">
+                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                           </a>
+                         )}
+                       </div>
+                    </div>
 
-          <section className="w-full p-8 rounded-3xl border-2 border-gray-200 bg-gradient-to-br from-white/80 to-gray-50 shadow-xl">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black mb-8 text-center">Stats</h2>
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-              {stats.map((item) => (
-                <div key={item.label} className="p-6 rounded-2xl border-2 border-gray-200 bg-gradient-to-br from-white/50 to-gray-50 hover:shadow-xl transition-all duration-300">
-                  <p className="text-4xl font-black text-gray-900 mb-2">
-                    {item.value}
-                  </p>
-                  <p className="text-sm uppercase tracking-wider font-semibold text-gray-600">{item.label}</p>
+                    {/* Members Grid */}
+                    <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {team.members.map((member, mIdx) => (
+                        <div key={mIdx} className="bg-white/40 backdrop-blur-md border border-gray-200 rounded-3xl p-6 flex flex-col justify-center hover:bg-white transition-all shadow-sm">
+                           <h5 className="text-xl font-bold text-black tracking-tight">{member.name}</h5>
+                           <p className="text-xs font-bold text-gray-500 tracking-widest mt-1">{member.role}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </section>
-        </div>
+        )}
+
+        {/* Loading State Skeleton */}
+        {(!aboutData || !teamData) && (
+          <div className="py-20 animate-pulse space-y-4">
+             <div className="h-1 lg:w-96 w-40 bg-gray-200 rounded-full mx-auto"></div>
+             <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.5em]">Establishing Connection</p>
+          </div>
+        )}
+
       </div>
     </InteractiveBackground>
   );
