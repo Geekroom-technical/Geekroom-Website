@@ -1,7 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
+import os 
+
+load_dotenv()
 
 app = FastAPI(title="GeekRoom API", version="1.2.0")
+
+MONGO_URI = os.getenv("MONGO_URI")
+mongo = AsyncIOMotorClient(MONGO_URI)
 
 # CORS setup - allowing frontend origins
 app.add_middleware(
@@ -14,7 +23,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "GeekRoom API is running 🚀", "docs": "/docs"}
+    return {"message": "GeekRoom API is running FAAH", "docs": "/docs"}
 
 @app.get("/api/about")
 async def get_about():
@@ -51,30 +60,15 @@ async def get_about():
         "description": "Geek Room is a college tech club where students explore, collaborate, and create real software through workshops, hackathons, and community projects."
     }
 
-@app.get("/api/events")
-async def get_events():
-    return {
-        "events": [
-            {
-                "id": 1,
-                "title": "Hackathon 2025",
-                "date": "2025-04-15",
-                "description": "Annual GeekRoom Hackathon",
-                "location": "SRM Ghaziabad",
-                "image": "/events/hackathon.jpg",
-                "status": "Upcoming"
-            },
-            {
-                "id": 2,
-                "title": "MERN Workshop",
-                "date": "2025-03-20",
-                "description": "Full-stack web development workshop",
-                "location": "SRM Ghaziabad",
-                "image": "/events/workshop.jpg",
-                "status": "Completed"
-            }
-        ]
-    }
+@app.get("/api/mongo/status")
+async def check_stats():
+    try:
+        await mongo.admin.command('ping')
+        db_status = "ONLINE"
+    except Exception as e:
+        db_status = "OFFLINE"
+
+    return {"status": db_status}
 
 @app.get("/api/team")
 async def get_team():
