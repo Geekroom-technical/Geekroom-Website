@@ -12,10 +12,9 @@ export default function InteractiveBackground({ children }) {
       const x = e.clientX / w - 0.5;
       const y = e.clientY / h - 0.5;
 
-      // Drastically increased the movement strength so the effect is very noticeable
+      // Mouse-tracking movement strength
       const strength = 180;
 
-      // Move in OPPOSITE direction → negative sign
       if (blob1.current) {
         blob1.current.style.transform = `translate(${-x * strength}px, ${-y * strength}px)`;
       }
@@ -30,24 +29,26 @@ export default function InteractiveBackground({ children }) {
 
   return (
     <div style={{ position: "relative", overflow: "hidden", minHeight: "100vh", background: "#ffffff" }}>
-      {/* Blob 1 - top left (Cyan / Teal) */}
+      {/* Blob 1 - top left (Cyan / Teal) - FIXED for scroll support */}
       <div ref={blob1} style={{
-        position: "absolute", top: "0%", left: "5%",
+        position: "fixed", top: "-10%", left: "-5%",
         width: 900, height: 900, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(6,182,212,0.65), transparent 70%)",
-        filter: "blur(60px)",
-        transition: "transform 0.1s ease-out",
+        background: "radial-gradient(circle, rgba(6,182,212,0.55), transparent 70%)",
+        filter: "blur(80px)",
+        transition: "transform 0.15s ease-out",
         pointerEvents: "none",
+        zIndex: 0,
       }} />
 
-      {/* Blob 2 - bottom right (Orange) */}
+      {/* Blob 2 - bottom right (Orange) - FIXED for scroll support */}
       <div ref={blob2} style={{
-        position: "absolute", bottom: "0%", right: "5%",
+        position: "fixed", bottom: "-10%", right: "-5%",
         width: 900, height: 900, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(249,115,22,0.65), transparent 70%)",
-        filter: "blur(60px)",
-        transition: "transform 0.1s ease-out",
+        background: "radial-gradient(circle, rgba(249,115,22,0.55), transparent 70%)",
+        filter: "blur(80px)",
+        transition: "transform 0.15s ease-out",
         pointerEvents: "none",
+        zIndex: 0,
       }} />
 
       {/* Page content sits on top */}
