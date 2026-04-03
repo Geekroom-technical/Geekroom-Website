@@ -49,9 +49,6 @@ async def get_team():
     return team_data or {"teams": []}
 
 
-
-
-
 @app.get("/api/about")
 async def get_about():
     return {
@@ -79,9 +76,9 @@ async def get_about():
             "Networking",
         ],
         "stats": [
-            { "label": "Members", "value": "200+" },
-            { "label": "Events", "value": "30+" },
-            { "label": "Projects", "value": "50+" },
+            { "label": "Members", "value": "35+" },
+            { "label": "Events", "value": "10+" },
+            { "label": "Projects", "value": "23+" },
             { "label": "Years", "value": "3+" },
         ],
         "description": "Geek Room is a college tech club where students explore, collaborate, and create real software through workshops, hackathons, and community projects."
