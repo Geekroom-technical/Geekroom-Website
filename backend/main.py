@@ -10,12 +10,15 @@ load_dotenv()
 app = FastAPI(title="GeekRoom API", version="1.2.0")
 
 MONGO_URI = os.getenv("MONGO_URI")
-mongo = AsyncIOMotorClient(MONGO_URI)
+mongo = AsyncIOMotorClient(MONGO_URI, serverSelectionTimeoutMS=2000)
+db = mongo.get_default_database()    #takes db from uri because me using same db for geekroom calender because wy not
 
-# CORS setup - allowing frontend origins
+#basic cors shit
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://10.31.182.181:3000"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,6 +27,30 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {"message": "GeekRoom API is running FAAH", "docs": "/docs"}
+
+@app.get("/api/mongo/status")
+async def check_stats():
+    try:
+        await mongo.admin.command('ping')
+        db_status = "ONLINE"
+    except Exception as e:
+        db_status = "OFFLINE"
+
+    return {"status": db_status}
+
+@app.get("/api/mongo/events")
+async def get_event():
+    events = await db.geekroom.find_one({"name": "events"}, {"_id": 0})
+    return events 
+
+@app.get("/api/team")
+async def get_team():
+    team_data = await db.geekroom.find_one({"name": "teams"}, {"_id": 0})
+    return team_data or {"teams": []}
+
+
+
+
 
 @app.get("/api/about")
 async def get_about():
@@ -60,46 +87,6 @@ async def get_about():
         "description": "Geek Room is a college tech club where students explore, collaborate, and create real software through workshops, hackathons, and community projects."
     }
 
-@app.get("/api/mongo/status")
-async def check_stats():
-    try:
-        await mongo.admin.command('ping')
-        db_status = "ONLINE"
-    except Exception as e:
-        db_status = "OFFLINE"
-
-    return {"status": db_status}
-
-@app.get("/api/team")
-async def get_team():
-    return {
-        "teams": [
-            {
-                "name": "Web Development",
-                "lead": {
-                    "name": "John Doe",
-                    "role": "Web Dev Lead",
-                    "image": "/team/john.jpg",
-                    "linkedin": "https://linkedin.com/in/johndoe"
-                },
-                "members": [
-                    { "name": "Alice Sharma", "role": "Frontend Dev", "image": "/team/alice.jpg" },
-                    { "name": "Bob Kumar", "role": "Backend Dev", "image": "/team/bob.jpg" }
-                ]
-            },
-            {
-                "name": "AI / ML",
-                "lead": {
-                    "name": "Jane Smith",
-                    "role": "AI/ML Lead",
-                    "image": "/team/jane.jpg"
-                },
-                "members": [
-                    { "name": "Raj Patel", "role": "ML Engineer", "image": "/team/raj.jpg" }
-                ]
-            }
-        ]
-    }
 
 if __name__ == "__main__":
     import uvicorn
