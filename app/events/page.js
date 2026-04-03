@@ -61,12 +61,19 @@ export default function Events() {
                   {event.description}
                 </p>
 
-                <div className="mt-10 flex items-center gap-2 group-hover:gap-4 transition-all duration-300 cursor-pointer">
-                   <span className="text-[10px] font-black text-black uppercase tracking-widest border-b-2 border-black pb-1">Register Now</span>
-                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                      <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round"/>
-                   </svg>
-                </div>
+                {event.registerlink && (
+                  <a 
+                    href={event.registerlink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="mt-10 inline-flex items-center gap-2 group-hover:gap-4 transition-all duration-300 cursor-pointer"
+                  >
+                     <span className="text-[10px] font-black text-black uppercase tracking-widest border-b-2 border-black pb-1">Register Now</span>
+                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round"/>
+                     </svg>
+                  </a>
+                )}
               </div>
             ))}
           </div>
