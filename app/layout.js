@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
         <main className="flex-grow flex flex-col relative z-0">
           {children}
         </main>
+        <Analytics />
       </body>
     </html>
   );
