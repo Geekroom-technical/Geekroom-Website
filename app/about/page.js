@@ -8,7 +8,7 @@ export default function AboutPage() {
   const [aboutData, setAboutData] = useState(null);
 
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
     
     // Fetch About
     fetch(`${apiUrl}/api/about`)

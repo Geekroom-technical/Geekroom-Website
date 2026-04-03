@@ -8,7 +8,7 @@ export default function TeamPage() {
   const [teamData, setTeamData] = useState(null);
 
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
     
     // Fetch Team
     fetch(`${apiUrl}/api/team`)

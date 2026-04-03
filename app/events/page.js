@@ -8,7 +8,7 @@ export default function Events() {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
     
     fetch(`${apiUrl}/api/mongo/events`)
       .then((res) => res.json())
