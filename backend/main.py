@@ -81,7 +81,7 @@ async def get_about():
             { "label": "Projects", "value": "23+" },
             { "label": "Years", "value": "3+" },
         ],
-        "description": "Geek Room is a college tech club where students explore, collaborate, and create real software through workshops, hackathons, and community projects."
+        "description": "Geek Room is where curiosity meets creation, where ideas escape notebooks and shape the future."
     }
 
 
