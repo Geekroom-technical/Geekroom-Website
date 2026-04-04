@@ -1,6 +1,7 @@
 import RootLayoutContent from "./layout-content";
 
 export const metadata = {
+  metadataBase: new URL("https://geekroom-srmist.co.in"),
   title: "GeekRoom | Tech Community",
   description: "Where coders connect, build, and grow. Join our tech community for events, projects, and collaboration.",
   keywords: "tech community, coders, programming, events, projects, collaboration, geekroom",
@@ -10,7 +11,7 @@ export const metadata = {
   robots: "index, follow",
   openGraph: {
     type: "website",
-    url: "https://geekroom.tech",
+    url: "https://geekroom-srmist.co.in",
     title: "GeekRoom | Tech Community",
     description: "Where coders connect, build, and grow.",
     siteName: "GeekRoom",
@@ -31,7 +32,7 @@ export const metadata = {
     images: ["/Geekroom.png"],
   },
   alternates: {
-    canonical: "https://geekroom.tech",
+    canonical: "https://geekroom-srmist.co.in",
   },
 };
 

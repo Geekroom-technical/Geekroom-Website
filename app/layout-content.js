@@ -22,7 +22,7 @@ export default function RootLayoutContent({ children }) {
         <meta charSet="utf-8" />
         <link rel="icon" href="/Logo.png" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="canonical" href="https://geekroom.tech" />
+        <link rel="canonical" href="https://geekroom-srmist.co.in" />
         <meta property="og:image" content="/Geekroom.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -37,14 +37,14 @@ export default function RootLayoutContent({ children }) {
               "@type": "Organization",
               "name": "GeekRoom",
               "alternateName": "GeekRoom Tech Community",
-              "url": "https://geekroom.tech",
-              "logo": "https://geekroom.tech/Transparentlogo.webp",
+              "url": "https://geekroom-srmist.co.in",
+              "logo": "https://geekroom-srmist.co.in/Transparentlogo.webp",
               "description": "Where coders connect, build, and grow.",
               "image": "/Geekroom.png",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "Community Support",
-                "url": "https://geekroom.tech/contact"
+                "url": "https://geekroom-srmist.co.in/contact"
               }
             }),
           }}

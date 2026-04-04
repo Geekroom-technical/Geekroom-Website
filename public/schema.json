@@ -3,8 +3,8 @@
   "@type": "Organization",
   "name": "GeekRoom",
   "alternateName": "GeekRoom Tech Community",
-  "url": "https://geekroom.tech",
-  "logo": "https://geekroom.tech/Transparentlogo.webp",
+  "url": "https://geekroom-srmist.co.in",
+  "logo": "https://geekroom-srmist.co.in/Transparentlogo.webp",
   "description": "Where coders connect, build, and grow. A tech community for events, projects, and collaboration at SRM Ghaziabad.",
   "image": "https://res.cloudinary.com/dwqzgfghq/image/upload/q_auto/f_auto/v1775288192/Geekroom_pswjia.png",
   "sameAs": [
@@ -22,8 +22,8 @@
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "Community Support",
-    "url": "https://geekroom.tech/contact",
-    "email": "contact@geekroom.tech"
+    "url": "https://geekroom-srmist.co.in/contact",
+    "email": "contact@geekroom-srmist.co.in"
   },
   "areaServed": "Ghaziabad",
   "knowsAbout": [
