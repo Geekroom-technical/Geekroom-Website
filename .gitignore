@@ -21,8 +21,8 @@
 /build
 
 # misc
-backend/addevent.py
-backend/addteam.py
+addevent.py
+addteam.py
 .DS_Store
 *.pem
 
