@@ -16,7 +16,7 @@ export const metadata = {
     siteName: "GeekRoom",
     images: [
       {
-        url: "https://res.cloudinary.com/dwqzgfghq/image/upload/q_auto/f_auto/v1775288192/Geekroom_pswjia.png",
+        url: "/Geekroom.png",
         width: 1200,
         height: 630,
         alt: "GeekRoom - Tech Community",
@@ -28,7 +28,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "GeekRoom | Tech Community",
     description: "Where coders connect, build, and grow.",
-    images: ["https://res.cloudinary.com/dwqzgfghq/image/upload/q_auto/f_auto/v1775288192/Geekroom_pswjia.png"],
+    images: ["/Geekroom.png"],
   },
   alternates: {
     canonical: "https://geekroom.tech",

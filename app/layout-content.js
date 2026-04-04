@@ -20,13 +20,13 @@ export default function RootLayoutContent({ children }) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <head>
         <meta charSet="utf-8" />
-        <link rel="icon" href="/next.svg" />
+        <link rel="icon" href="/Logo.png" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href="https://geekroom.tech" />
-        <meta property="og:image" content="https://res.cloudinary.com/dwqzgfghq/image/upload/q_auto/f_auto/v1775288192/Geekroom_pswjia.png" />
+        <meta property="og:image" content="/Geekroom.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta name="twitter:image" content="https://res.cloudinary.com/dwqzgfghq/image/upload/q_auto/f_auto/v1775288192/Geekroom_pswjia.png" />
+        <meta name="twitter:image" content="/Geekroom.png" />
         
         {/* Structured Data for Rich Snippets */}
         <script
@@ -40,7 +40,7 @@ export default function RootLayoutContent({ children }) {
               "url": "https://geekroom.tech",
               "logo": "https://geekroom.tech/Transparentlogo.webp",
               "description": "Where coders connect, build, and grow.",
-              "image": "https://res.cloudinary.com/dwqzgfghq/image/upload/q_auto/f_auto/v1775288192/Geekroom_pswjia.png",
+              "image": "/Geekroom.png",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "Community Support",
