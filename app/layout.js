@@ -1,37 +1,47 @@
-"use client";
+import RootLayoutContent from "./layout-content";
 
-import { useEffect } from "react";
-import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from "../components/Navbar";
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import "./globals.css";
+export const metadata = {
+  metadataBase: new URL("https://geekroom-srmist.co.in"),
+  title: "GeekRoom | Tech Community",
+  description: "Where coders connect, build, and grow. Join our tech community for events, projects, and collaboration.",
+  keywords: "tech community, coders, programming, events, projects, collaboration, geekroom",
+  authors: [{ name: "GeekRoom" }],
+  creator: "GeekRoom",
+  publisher: "GeekRoom",
+  robots: "index, follow",
+  openGraph: {
+    type: "website",
+    url: "https://geekroom-srmist.co.in",
+    title: "GeekRoom | Tech Community",
+    description: "Where coders connect, build, and grow.",
+    siteName: "GeekRoom",
+    images: [
+      {
+        url: "/Geekroom.png",
+        width: 1200,
+        height: 630,
+        alt: "GeekRoom - Tech Community",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GeekRoom | Tech Community",
+    description: "Where coders connect, build, and grow.",
+    images: ["/Geekroom.png"],
+  },
+  alternates: {
+    canonical: "https://geekroom-srmist.co.in",
+  },
+};
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+export const generateViewport = () => ({
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#000000",
+});
 
 export default function RootLayout({ children }) {
-  useEffect(() => {
-    document.documentElement.style.overscrollBehaviorX = "none";
-    document.body.style.overscrollBehaviorX = "none";
-  }, []);
-
-  return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <head>
-        <title>GeekRoom | Tech Community</title>
-        <meta name="description" content="Where coders connect, build, and grow." />
-      </head>
-      <body className="min-h-full flex flex-col bg-white text-black font-sans">
-        {/* Navbar globally mounted here */}
-        <Navbar />
-
-        <main className="flex-grow flex flex-col relative z-0">
-          {children}
-        </main>
-        <Analytics />
-        <SpeedInsights />
-      </body>
-    </html>
-  );
+  return <RootLayoutContent>{children}</RootLayoutContent>;
 }
