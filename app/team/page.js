@@ -28,6 +28,7 @@ export default function TeamPage() {
   const president = getTop3Person("president");
   const vicePresident = getTop3Person("vice-president");
   const secretary = getTop3Person("secretary");
+  const mentor = teamData?.mentor?.mentor;
 
   return (
     <InteractiveBackground>
@@ -42,6 +43,31 @@ export default function TeamPage() {
             The passionate students driving the mission of GeekRoom forward.
           </p>
         </section>
+
+        {/* Mentor Section */}
+        {mentor && (
+          <section className="w-full flex justify-center">
+            <div className="max-w-md w-full">
+              <div className="group relative bg-white border-2 border-black rounded-[3.5rem] p-10 transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1">
+                {mentor.image && (
+                  <div className="w-full aspect-square rounded-[2.5rem] overflow-hidden mb-8 border-2 border-black/5 grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <Image
+                      src={mentor.image}
+                      alt={mentor.name}
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
+                    />
+                  </div>
+                )}
+                <div className="text-center space-y-2">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.4em] mb-2 leading-none">Mentor</p>
+                  <h4 className="text-3xl font-bold text-black tracking-tighter leading-none">{mentor.name}</h4>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Top 3 Leadership Section */}
         {teamData?.top3 && (
