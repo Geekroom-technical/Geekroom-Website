@@ -9,7 +9,7 @@ export default function TeamPage() {
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    
+
     // Fetch Team
     fetch(`${apiUrl}/api/team`)
       .then((res) => res.json())
@@ -37,12 +37,13 @@ export default function TeamPage() {
         {/* Hero Section */}
         <section className="text-center animate-fadeIn space-y-6">
           <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-[#1a1a1a] select-none">
-            Meet Our Core Team
+            Meet Our Faculty Mentor
           </h1>
           <p className="text-gray-800 text-lg sm:text-2xl font-medium tracking-tight leading-relaxed max-w-4xl mx-auto opacity-90">
-            The passionate students driving the mission of GeekRoom forward.
+            The faculty who guides the mission of GeekRoom forward.
           </p>
         </section>
+
 
         {/* Mentor Section */}
         {mentor && (
@@ -68,6 +69,16 @@ export default function TeamPage() {
             </div>
           </section>
         )}
+
+        {/* Hero Section */}
+        <section className="text-center animate-fadeIn space-y-6">
+          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-[#1a1a1a] select-none">
+            Meet Our Core Team
+          </h1>
+          <p className="text-gray-800 text-lg sm:text-2xl font-medium tracking-tight leading-relaxed max-w-4xl mx-auto opacity-90">
+            The passionate students driving the mission of GeekRoom forward.
+          </p>
+        </section>
 
         {/* Top 3 Leadership Section */}
         {teamData?.top3 && (
@@ -170,13 +181,13 @@ export default function TeamPage() {
                         <div key={lIdx} className="group relative bg-white border-2 border-black rounded-[2.5rem] p-10 transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1 flex flex-col items-center text-center">
                           {leader.image && (
                             <div className="w-full aspect-square rounded-2xl overflow-hidden mb-8 border-2 border-black/5 grayscale group-hover:grayscale-0 transition-all duration-700 max-w-sm">
-                               <Image 
-                                 src={leader.image} 
-                                 alt={leader.name}
-                                 width={400}
-                                 height={400}
-                                 className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
-                               />
+                              <Image
+                                src={leader.image}
+                                alt={leader.name}
+                                width={400}
+                                height={400}
+                                className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
+                              />
                             </div>
                           )}
                           <div className="space-y-2">
@@ -189,9 +200,9 @@ export default function TeamPage() {
                           </div>
                           {leader.github && (
                             <div className="mt-8 flex justify-center">
-                                <a href={leader.github} target="_blank" className="inline-flex p-3 bg-gray-50 rounded-xl hover:bg-black hover:text-white transition-all">
-                                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                </a>
+                              <a href={leader.github} target="_blank" className="inline-flex p-3 bg-gray-50 rounded-xl hover:bg-black hover:text-white transition-all">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
+                              </a>
                             </div>
                           )}
                         </div>
@@ -210,7 +221,7 @@ export default function TeamPage() {
                           </div>
                           {member.github && (
                             <a href={member.github} target="_blank" className="mt-6 opacity-0 group-hover/item:opacity-100 transition-opacity">
-                              <svg className="w-4 h-4 text-gray-400 hover:text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                              <svg className="w-4 h-4 text-gray-400 hover:text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
                             </a>
                           )}
                         </div>
