@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    
+
     // Fetch About
     fetch(`${apiUrl}/api/about`)
       .then((res) => res.json())
@@ -46,7 +46,7 @@ export default function Home() {
         </div>
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-black mb-6">
-          SRM Ghaziabad
+          SRMIST Delhi-NCR Campus
         </h2>
 
         <p className="text-gray-800 text-base sm:text-lg md:text-xl font-normal tracking-tight leading-relaxed max-w-3xl mb-12">
