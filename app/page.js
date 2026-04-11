@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import InteractiveBackground from "../components/InteractiveBackground";
+import Collaborators from "../components/Collaborators";
 
 export default function Home() {
   const [data, setData] = useState({
@@ -49,9 +50,11 @@ export default function Home() {
           SRMIST Delhi-NCR Campus
         </h2>
 
-        <p className="text-gray-800 text-base sm:text-lg md:text-xl font-normal tracking-tight leading-relaxed max-w-3xl mb-12">
+        <p className="text-gray-800 text-base sm:text-lg md:text-xl font-normal tracking-tight leading-relaxed max-w-3xl mb-16">
           {data.description}
         </p>
+
+        <Collaborators />
 
       </div>
     </InteractiveBackground>
