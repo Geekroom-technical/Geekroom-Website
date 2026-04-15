@@ -25,9 +25,10 @@ export default function Collaborators() {
                     {/* Logo Container */}
                     <div className="relative w-3/5 h-1/2 opacity-70 group-hover:opacity-100 transition-opacity duration-300 grayscale group-hover:grayscale-0">
                         <Image
-                            src="/amd-logo.png"
+                            src="/amd.png"
                             alt="AMD Logo"
-                            fill
+                            height={300}
+                            width={300}
                             className="object-contain"
                         />
                     </div>
@@ -46,14 +47,14 @@ export default function Collaborators() {
                     {/* Logo Container */}
                     <div className="relative w-3/5 h-1/2 opacity-70 group-hover:opacity-100 transition-opacity duration-300 grayscale group-hover:grayscale-0">
                         <Image
-                            src="/AIM_logo_new-CKspk8Of.png"
+                            src="/AIM.png"
                             alt="AIM Media Logo"
-                            fill
-                            className="object-contain"
+                            height={300}
+                            width={300}
+                            className="object-contain drop-shadow-2xl"
                         />
                     </div>
                 </a>
-
             </div>
 
         </div>
