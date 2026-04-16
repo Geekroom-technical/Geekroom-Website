@@ -59,6 +59,16 @@ export default function Collaborators() {
 
             </div>
 
+            {/* More Incoming Section */}
+            <div className="mt-12 mb-8">
+                <p className="text-lg sm:text-xl font-semibold text-[#1a1a1a] animate-pulse">
+                    More coming soon
+                    <span className="inline-block ml-1 animate-bounce">.</span>
+                    <span className="inline-block animate-bounce" style={{ animationDelay: "0.1s" }}>.</span>
+                    <span className="inline-block animate-bounce" style={{ animationDelay: "0.2s" }}>.</span>
+                </p>
+            </div>
+
         </div>
     );
 }

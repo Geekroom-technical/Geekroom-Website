@@ -67,19 +67,19 @@ async def get_about():
                 "title": "Grow as One",
                 "description": "We celebrate wins together and support every member through every challenge.",
                 "icon_svg": "M3.5 19c0-2.5 2-4.5 4.5-4.5S12.5 16.5 12.5 19M11.5 19c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5"
-            },
+            }
         ],
         "activityCards": [
             "Workshops",
             "Hackathons",
             "Open Source",
-            "Networking",
+            "Networking"
         ],
         "stats": [
-            { "label": "Members", "value": "35+" },
-            { "label": "Events", "value": "10+" },
-            { "label": "Projects", "value": "23+" },
-            { "label": "Years", "value": "3+" },
+            {"label": "Members", "value": "35+"},
+            {"label": "Events", "value": "10+"},
+            {"label": "Projects", "value": "23+"},
+            {"label": "Years", "value": "3+"}
         ],
         "description": "Geek Room is where curiosity meets creation, where ideas escape notebooks and shape the future."
     }

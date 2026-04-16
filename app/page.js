@@ -15,7 +15,10 @@ export default function Home() {
 
     // Fetch About
     fetch(`${apiUrl}/api/about`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
       .then((json) => {
         if (json.description) setData(json);
       })
