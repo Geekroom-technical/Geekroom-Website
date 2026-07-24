@@ -7,32 +7,57 @@ export default function Events() {
   const [events, setEvents] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  const getEventStatus = (dateStr, startTimeStr, endTimeStr) => {
-    if (!dateStr || !startTimeStr || !endTimeStr) return "EXECUTED";
+  const getEventStatus = (event) => {
+    if (!event) return "EXECUTED";
 
-    const parseTime = (dStr, tStr) => {
+    if (event.status) {
+      const s = String(event.status).toUpperCase();
+      if (s === "ONGOING" || s === "EXECUTING" || s === "LIVE") return "ONGOING";
+      if (s === "UPCOMING") return "UPCOMING";
+      if (s === "EXECUTED" || s === "PAST") return "EXECUTED";
+    }
+
+    const startDateStr = event.start_date || event.date;
+    const endDateStr = event.end_date || event.date || startDateStr;
+
+    if (!startDateStr) return "EXECUTED";
+
+    const parseDateTime = (dStr, tStr, defaultBoundary) => {
       const date = new Date(dStr);
-      const match = tStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
-      if (!match) return date;
+      if (isNaN(date.getTime())) return null;
 
-      let [_, hours, mins, ampm] = match;
-      hours = parseInt(hours);
-      mins = parseInt(mins);
-      ampm = ampm.toUpperCase();
+      if (tStr) {
+        const match = tStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (match) {
+          let [_, hours, mins, ampm] = match;
+          hours = parseInt(hours);
+          mins = parseInt(mins);
+          ampm = ampm.toUpperCase();
 
-      if (ampm === "PM" && hours < 12) hours += 12;
-      if (ampm === "AM" && hours === 12) hours = 0;
+          if (ampm === "PM" && hours < 12) hours += 12;
+          if (ampm === "AM" && hours === 12) hours = 0;
 
-      date.setHours(hours, mins, 0, 0);
+          date.setHours(hours, mins, 0, 0);
+          return date;
+        }
+      }
+
+      if (defaultBoundary === "start") {
+        date.setHours(0, 0, 0, 0);
+      } else {
+        date.setHours(23, 59, 59, 999);
+      }
       return date;
     };
 
     const now = new Date();
-    const start = parseTime(dateStr, startTimeStr);
-    const end = parseTime(dateStr, endTimeStr);
+    const start = parseDateTime(startDateStr, event.start_time, "start");
+    const end = parseDateTime(endDateStr, event.end_time, "end");
+
+    if (!start) return "EXECUTED";
 
     if (now < start) return "UPCOMING";
-    if (now >= start && now <= end) return "ONGOING";
+    if (end && now <= end) return "ONGOING";
     return "EXECUTED";
   };
 
@@ -85,9 +110,10 @@ export default function Events() {
         {events.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-1 gap-12 w-full max-w-4xl">
             {events.map((event, idx) => {
-              const status = getEventStatus(event.date, event.start_time, event.end_time);
+              const status = getEventStatus(event);
               const executed = status === "EXECUTED";
               const ongoing = status === "ONGOING";
+              const formattedDate = event.date || (event.start_date && event.end_date && event.start_date !== event.end_date ? `${event.start_date} - ${event.end_date}` : event.start_date || "TBA");
               return (
                 <div
                   key={idx}
@@ -103,7 +129,7 @@ export default function Events() {
                     </h4>
                     <div className={`shrink-0 inline-flex items-center border border-black/5 text-[10px] font-bold px-4 py-2 rounded-full tracking-widest shadow-inner ${executed ? 'bg-gray-200 text-gray-500' : ongoing ? 'bg-orange-100 text-orange-600' : 'bg-[#f0f0f0] text-black'}`}>
                       <span className={`w-2 h-2 rounded-full mr-2 ${executed ? 'bg-gray-400' : ongoing ? 'bg-orange-500 animate-ping' : 'bg-black animate-pulse'}`}></span>
-                      {event.date}
+                      {formattedDate}
                     </div>
                   </div>
 
