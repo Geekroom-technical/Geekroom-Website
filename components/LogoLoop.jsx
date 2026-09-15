@@ -288,6 +288,7 @@ export const LogoLoop = memo(({
       <img
         className={cx(
           'h-[var(--logoloop-logoHeight)] w-auto block object-contain',
+          item.className,
           '[-webkit-user-drag:none] pointer-events-none',
           '[image-rendering:-webkit-optimize-contrast]',
           'motion-reduce:transition-none',

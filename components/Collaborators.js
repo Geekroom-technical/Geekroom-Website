@@ -5,9 +5,13 @@ export default function Collaborators() {
     const collaboratorLogos = [
         { src: "/amdlogo.png", alt: "AMD", href: "https://www.amd.com" },
         { src: "/aimlogo.png", alt: "AIM Media", href: "https://www.aimmedia.com" },
+        { src: "/gdailogo.png", alt: "GDAI", href: "https://www.gdai.in", className: "w-[180px] h-[80px] grayscale" },
+        { src: "/gamedevindia.png", alt: "Game Dev India", href: "https://gamedev.in/", className: "w-[180px] h-[80px]" },
         // Duplicated so the loop has enough items to scroll smoothly
         { src: "/amdlogo.png", alt: "AMD", href: "https://www.amd.com" },
         { src: "/aimlogo.png", alt: "AIM Media", href: "https://www.aimmedia.com" },
+        { src: "/gdailogo.png", alt: "GDAI", href: "https://www.gdai.in", className: "w-[180px] h-[80px] grayscale" },
+        { src: "/gamedevindia.png", alt: "Game Dev India", href: "https://gamedev.in/", className: "w-[180px] h-[80px]" },
     ];
 
     return (
