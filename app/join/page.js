@@ -70,6 +70,7 @@ export default function JoinPage() {
   const [formData, setFormData] = useState({
     name: "",
     registrationNo: "",
+    phone: "",
     branch: "",
     section: "",
     whyJoin: "",
@@ -159,6 +160,18 @@ export default function JoinPage() {
       return;
     }
 
+    const regPattern = /^RA\d{13}$/i;
+    if (!regPattern.test(formData.registrationNo.trim())) {
+      alert("Registration Number must start with 'RA' followed by 13 digits (15 characters total, e.g. RA2411003030xxx).");
+      return;
+    }
+
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(formData.phone.trim())) {
+      alert("Mobile number must be exactly 10 digits.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -180,6 +193,7 @@ export default function JoinPage() {
     setFormData({
       name: "",
       registrationNo: "",
+      phone: "",
       branch: "",
       section: "",
       whyJoin: "",
@@ -309,21 +323,59 @@ export default function JoinPage() {
                   />
                 </div>
 
-                {/* Registration Number */}
-                <div className="space-y-2">
-                  <label htmlFor="registrationNo" className="block text-sm font-semibold text-gray-700 ml-1">
-                    Registration No <span className="text-orange-500">*</span>
-                  </label>
-                  <input
-                    id="registrationNo"
-                    name="registrationNo"
-                    type="text"
-                    required
-                    value={formData.registrationNo}
-                    onChange={handleBaseChange}
-                    placeholder="e.g. RA2411003010xxx"
-                    className="w-full px-5 py-4 bg-white/80 border-2 border-transparent rounded-2xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-cyan-500 focus:outline-none transition-all duration-300 shadow-sm hover:shadow-md"
-                  />
+                {/* Registration Number & Mobile Number Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Registration Number */}
+                  <div className="space-y-2">
+                    <label htmlFor="registrationNo" className="block text-sm font-semibold text-gray-700 ml-1">
+                      Registration No <span className="text-orange-500">*</span>
+                    </label>
+                    <input
+                      id="registrationNo"
+                      name="registrationNo"
+                      type="text"
+                      required
+                      maxLength={15}
+                      value={formData.registrationNo}
+                      onChange={(e) => {
+                        const val = e.target.value.toUpperCase();
+                        if (val.length <= 15) {
+                          setFormData((prev) => ({ ...prev, registrationNo: val }));
+                        }
+                      }}
+                      placeholder="e.g. RA2411003030xxx"
+                      className="w-full px-5 py-4 bg-white/80 border-2 border-transparent rounded-2xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-cyan-500 focus:outline-none transition-all duration-300 shadow-sm hover:shadow-md"
+                    />
+                    <p className="text-xs text-gray-500 ml-1">
+                      Must start with RA followed by 13 digits (15 characters)
+                    </p>
+                  </div>
+
+                  {/* Mobile Number */}
+                  <div className="space-y-2">
+                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 ml-1">
+                      Mobile Number <span className="text-orange-500">*</span>
+                    </label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      maxLength={10}
+                      value={formData.phone}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, "");
+                        if (val.length <= 10) {
+                          setFormData((prev) => ({ ...prev, phone: val }));
+                        }
+                      }}
+                      placeholder="10-digit mobile number"
+                      className="w-full px-5 py-4 bg-white/80 border-2 border-transparent rounded-2xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-cyan-500 focus:outline-none transition-all duration-300 shadow-sm hover:shadow-md"
+                    />
+                    <p className="text-xs text-gray-500 ml-1">
+                      Must be exactly 10 digits
+                    </p>
+                  </div>
                 </div>
 
                 {/* Branch & Section Grid */}

@@ -86,23 +86,25 @@ def print_table(applicants):
         print("\nNo applicants found.")
         return
 
-    print("\n" + "=" * 90)
-    print(f"{'#':<4} {'Name':<22} {'Reg No':<18} {'Branch':<16} {'Sec':<4} {'Department':<16}")
-    print("=" * 90)
+    print("\n" + "=" * 105)
+    print(f"{'#':<4} {'Name':<20} {'Reg No':<17} {'Phone':<12} {'Branch':<14} {'Sec':<4} {'Department':<14}")
+    print("=" * 105)
 
     for i, a in enumerate(applicants, 1):
-        name = (a.get("name") or "")[:20]
+        name = (a.get("name") or "")[:18]
         reg = (a.get("registrationNo") or "")[:16]
-        branch = (a.get("branch") or "")[:14]
+        phone = (a.get("phone") or "-")[:11]
+        branch = (a.get("branch") or "")[:12]
         sec = a.get("section") or "-"
-        dept = (a.get("department") or "")[:14]
-        print(f"{i:<4} {name:<22} {reg:<18} {branch:<16} {sec:<4} {dept:<16}")
-    print("-" * 90)
+        dept = (a.get("department") or "")[:13]
+        print(f"{i:<4} {name:<20} {reg:<17} {phone:<12} {branch:<14} {sec:<4} {dept:<14}")
+    print("-" * 105)
 
 def print_applicant_details(applicant):
     print("\n" + "#" * 60)
     print(f" APPLICANT: {applicant.get('name')} ({applicant.get('registrationNo')})")
     print("#" * 60)
+    print(f"Phone         : {applicant.get('phone', 'N/A')}")
     print(f"Department    : {applicant.get('department', '').upper()}")
     print(f"Branch / Sec  : {applicant.get('branch')} (Section: {applicant.get('section')})")
     print(f"Commitment    : {applicant.get('timeCommitment')}")

@@ -65,9 +65,17 @@ async def submit_recruitment(request: Request):
 
     name = data.get("name", "").strip()
     reg_no = data.get("registrationNo", "").strip().upper()
+    phone = data.get("phone", "").strip()
 
-    if not name or not reg_no:
-        raise HTTPException(status_code=400, detail="Name and Registration Number are required")
+    if not name or not reg_no or not phone:
+        raise HTTPException(status_code=400, detail="Name, Registration Number, and Mobile Number are required")
+
+    import re
+    if not re.match(r"^RA\d{13}$", reg_no):
+        raise HTTPException(status_code=400, detail="Registration number must start with RA followed by 13 digits (15 characters total)")
+
+    if not re.match(r"^\d{10}$", phone):
+        raise HTTPException(status_code=400, detail="Mobile number must be exactly 10 digits")
 
     raw_dept_answers = data.get("deptAnswers", {})
     # Skip empty fields so other departments' questions don't clutter the record
@@ -79,6 +87,7 @@ async def submit_recruitment(request: Request):
     applicant = {
         "name": name,
         "registrationNo": reg_no,
+        "phone": phone,
         "branch": data.get("branch", ""),
         "section": data.get("section", ""),
         "whyJoin": data.get("whyJoin", ""),

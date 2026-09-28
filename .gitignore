@@ -23,6 +23,8 @@
 # misc
 addevent.py
 addteam.py
+get_recruitment.py
+recruitment_results.json
 .DS_Store
 *.pem
 
