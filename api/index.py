@@ -49,6 +49,12 @@ async def get_team():
     return team_data or {"teams": []}
 
 
+@app.get("/api/recruitment")
+async def get_recruitment():
+    recruitment_data = await db.geekroom.find_one({"name": "recruitment"}, {"_id": 0})
+    return recruitment_data or {"recruitment": []}
+
+
 @app.get("/api/about")
 async def get_about():
     return {
