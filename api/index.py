@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
+from datetime import datetime, timezone
 import os 
 
 load_dotenv()
@@ -53,6 +54,69 @@ async def get_team():
 async def get_recruitment():
     recruitment_data = await db.geekroom.find_one({"name": "recruitment"}, {"_id": 0})
     return recruitment_data or {"recruitment": []}
+
+
+@app.post("/api/recruitment")
+async def submit_recruitment(request: Request):
+    try:
+        data = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload")
+
+    name = data.get("name", "").strip()
+    reg_no = data.get("registrationNo", "").strip().upper()
+
+    if not name or not reg_no:
+        raise HTTPException(status_code=400, detail="Name and Registration Number are required")
+
+    raw_dept_answers = data.get("deptAnswers", {})
+    # Skip empty fields so other departments' questions don't clutter the record
+    dept_answers = {
+        k: v for k, v in raw_dept_answers.items()
+        if v not in ("", [], None)
+    }
+
+    applicant = {
+        "name": name,
+        "registrationNo": reg_no,
+        "branch": data.get("branch", ""),
+        "section": data.get("section", ""),
+        "whyJoin": data.get("whyJoin", ""),
+        "pastExperience": data.get("pastExperience", ""),
+        "timeCommitment": data.get("timeCommitment", ""),
+        "department": data.get("department", ""),
+        "deptAnswers": dept_answers,
+        "submittedAt": datetime.now(timezone.utc).isoformat(),
+    }
+
+    # Append to recruitment list in MongoDB
+    await db.geekroom.update_one(
+        {"name": "recruitment"},
+        {"$push": {"recruitment": applicant}},
+        upsert=True
+    )
+
+    return {"status": "success", "message": "Application submitted successfully"}
+
+
+@app.delete("/api/recruitment/{registration_no}")
+async def delete_recruitment(registration_no: str):
+    res = await db.geekroom.update_one(
+        {"name": "recruitment"},
+        {"$pull": {"recruitment": {"registrationNo": registration_no.strip().upper()}}}
+    )
+    if res.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Applicant not found")
+    return {"status": "success", "message": f"Deleted applicant with registration number {registration_no}"}
+
+
+@app.delete("/api/recruitment")
+async def delete_all_recruitment():
+    await db.geekroom.update_one(
+        {"name": "recruitment"},
+        {"$set": {"recruitment": []}}
+    )
+    return {"status": "success", "message": "All recruitment applications cleared successfully"}
 
 
 @app.get("/api/about")
