@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
 import { Analytics } from "@vercel/analytics/next"
@@ -11,6 +12,8 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export default function RootLayoutContent({ children }) {
+  const pathname = usePathname();
+
   useEffect(() => {
     document.documentElement.style.overscrollBehaviorX = "none";
     document.body.style.overscrollBehaviorX = "none";
@@ -51,8 +54,8 @@ export default function RootLayoutContent({ children }) {
         />
       </head>
       <body className="min-h-full flex flex-col bg-white text-black font-sans">
-        {/* Navbar globally mounted here */}
-        <Navbar />
+        {/* Keep the public navigation separate from the private admin surface. */}
+        {!pathname.startsWith("/admin") && <Navbar />}
 
         <main className="flex-grow flex flex-col relative z-0">
           {children}

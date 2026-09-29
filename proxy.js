@@ -1,19 +1,18 @@
 import { NextResponse } from "next/server"
+import { isAdminRequest } from "./lib/admin-auth"
 
 export function proxy(req) {
-  const adminCookie = req.cookies.get("admin")
-  const adminSecret = process.env.ADMIN_SECRET || "geekroom_admin_secret_key_2026"
-  const isAdmin = adminCookie?.value === adminSecret
+  const isAdmin = isAdminRequest(req)
   const { pathname } = req.nextUrl
 
-  // ❌ Skip login page (VERY IMPORTANT)
-  if (pathname === "/admin/login") {
+  // Keep the login entry point available at the intentionally unlinked /admin path.
+  if (pathname === "/admin" || pathname === "/admin/login") {
     return NextResponse.next()
   }
 
   // 🔒 Protect admin pages
   if (!isAdmin && pathname.startsWith("/admin")) {
-    return NextResponse.redirect(new URL("/admin/login", req.url))
+    return NextResponse.redirect(new URL("/admin", req.url))
   }
 
   // 🔒 Protect API routes that expose sensitive data
