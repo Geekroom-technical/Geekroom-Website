@@ -8,7 +8,7 @@ export async function GET(request) {
   }
 
   try {
-    return NextResponse.json(await getApplicants())
+    return NextResponse.json(await getApplicants(request))
   } catch (error) {
     console.error("Failed to load applicants:", error)
     return NextResponse.json({ message: "Unable to load applicants" }, { status: 502 })

@@ -39,7 +39,7 @@ export async function GET(request) {
   }
 
   try {
-    const applicants = await getApplicants()
+    const applicants = await getApplicants(request)
     const answerKeys = [...new Set(
       applicants.flatMap((applicant) => Object.keys(applicant.deptAnswers || {})),
     )].sort()
