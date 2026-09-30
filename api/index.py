@@ -3,10 +3,37 @@ from fastapi.middleware.cors import CORSMiddleware
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
+from cryptography.fernet import Fernet, InvalidToken
 from datetime import datetime, timezone
-import os 
+import os
+import logging
 
 load_dotenv()
+
+# ---------------------------------------------------------------------------
+# Decrypt ADMIN_PASSWORD at startup — plaintext never stored in memory from .env
+# ---------------------------------------------------------------------------
+_ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY", "")
+_ADMIN_PASSWORD_ENCRYPTED = os.getenv("ADMIN_PASSWORD_ENCRYPTED", "")
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "")
+ADMIN_SECRET = os.getenv("ADMIN_SECRET", "")
+
+def _load_admin_password() -> str | None:
+    """Return the decrypted admin password, or None if unavailable."""
+    if not _ENCRYPTION_KEY or not _ADMIN_PASSWORD_ENCRYPTED:
+        logging.warning(
+            "ENCRYPTION_KEY or ADMIN_PASSWORD_ENCRYPTED missing from .env — "
+            "admin authentication will be disabled."
+        )
+        return None
+    try:
+        fernet = Fernet(_ENCRYPTION_KEY.encode())
+        return fernet.decrypt(_ADMIN_PASSWORD_ENCRYPTED.encode()).decode()
+    except (InvalidToken, Exception) as exc:
+        logging.error(f"Failed to decrypt ADMIN_PASSWORD_ENCRYPTED: {exc}")
+        return None
+
+ADMIN_PASSWORD: str | None = _load_admin_password()
 
 app = FastAPI(title="GeekRoom API", version="1.2.0")
 
@@ -162,6 +189,38 @@ async def get_about():
         ],
         "description": "Geek Room is where curiosity meets creation, where ideas escape notebooks and shape the future."
     }
+
+
+@app.post("/api/admin/login")
+async def admin_login(request: Request):
+    """Verify admin credentials using the encrypted password from .env."""
+    if ADMIN_PASSWORD is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Admin authentication is not configured on this server."
+        )
+
+    try:
+        data = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload")
+
+    email = data.get("email", "").strip().lower()
+    password = data.get("password", "")
+
+    if email != ADMIN_EMAIL.strip().lower() or password != ADMIN_PASSWORD:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    # Issue a simple HMAC-based session token (no plaintext secret exposed)
+    import hmac, hashlib, time
+    timestamp = str(int(time.time()))
+    token = hmac.new(
+        ADMIN_SECRET.encode(),
+        (email + timestamp).encode(),
+        hashlib.sha256,
+    ).hexdigest()
+
+    return {"status": "success", "token": token, "issued_at": timestamp}
 
 
 if __name__ == "__main__":
